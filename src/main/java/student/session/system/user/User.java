@@ -23,6 +23,10 @@ public class User {
 		this.setUserPassword(form.getUserPassword());
 	}
 	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getUserName() {
 		return userName;
 	}
@@ -39,8 +43,10 @@ public class User {
 	public boolean isValid() {
 		Pattern userNamePattern = Pattern.compile("^\\w{6,10}");
 		Pattern userPasswordPattern = Pattern.compile("^\\w{6,16}");
-		if(userNamePattern.matcher(userName).matches()==true && 
-			userPasswordPattern.matcher(userPassword).matches()==true)
+		Pattern personNamePattern = Pattern.compile("^\\w{3,10}");
+		if( userNamePattern.matcher(userName).matches()==true && 
+			userPasswordPattern.matcher(userPassword).matches()==true &&
+			personNamePattern.matcher(personName).matches()==true )
 			return true;
 		else return false;
 	}
