@@ -20,6 +20,7 @@ public class LoginController {
 			model.addAttribute("isValid", false);
 			return "home";
 		}
+		return "manager";
 		
 	}
 }

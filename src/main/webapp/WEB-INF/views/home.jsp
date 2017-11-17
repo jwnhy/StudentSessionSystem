@@ -31,7 +31,7 @@
 	    </form>
 	</div>
 	<div class="login-bottom">
-		<h3>New User &nbsp;<a href="#">Register</a>&nbsp Here</h3>
+		<h3>New User &nbsp;<a href="#">Register</a> Here</h3>
 	</div>
 </div>	
 

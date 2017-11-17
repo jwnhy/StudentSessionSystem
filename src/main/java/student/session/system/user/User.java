@@ -7,7 +7,16 @@ import java.util.regex.*;
 public class User {
 	private String userName;
 	private String userPassword;
+	private String personName;
 	
+	public String getPersonName() {
+		return personName;
+	}
+
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
+
 	public User(UserForm form)
 	{
 		this.setUserName(form.getUserName());
