@@ -45,8 +45,7 @@ public class User {
 		Pattern userPasswordPattern = Pattern.compile("^\\w{6,16}");
 		Pattern personNamePattern = Pattern.compile("^\\w{3,10}");
 		if( userNamePattern.matcher(userName).matches()==true && 
-			userPasswordPattern.matcher(userPassword).matches()==true &&
-			personNamePattern.matcher(personName).matches()==true )
+			userPasswordPattern.matcher(userPassword).matches()==true )
 			return true;
 		else return false;
 	}

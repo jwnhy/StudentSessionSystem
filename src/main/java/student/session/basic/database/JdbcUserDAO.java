@@ -2,6 +2,7 @@ package student.session.basic.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.management.RuntimeErrorException;
@@ -18,11 +19,15 @@ public class JdbcUserDAO implements UserDAO {
 	}
 
 	@Override
-	public void insertUser(User user) {
+	public User insertUser(User user) {
 		// TODO Auto-generated method stub
 		Connection connection = null;
 		String sql = "INSERT INTO userTable " +
 				"(userName, userPassword, personName) VALUES (?, ?, ?)";
+		if(findByUserName(user.getUserName())!=null)
+		{
+			return null;
+		}
 		try 
 		{
 			connection = dataSource.getConnection();
@@ -48,28 +53,67 @@ public class JdbcUserDAO implements UserDAO {
 				catch (SQLException e) { }
 			}
 		}
+		return user;
 	}
 
 	@Override
-	public void deleteByUserName(String userName) {
+	public void deleteByUserName(String userName) 
+	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void deleteByPersonName(String personName) {
+	public void deleteByPersonName(String personName)
+	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public User findByUserName(String userName) {
+	public User findByUserName(String userName)
+	{
+		String sql = "SELECT * FROM userTable WHERE userName = ?";
+		Connection connection = null;
 		// TODO Auto-generated method stub
-		return null;
+		try
+		{
+			connection = dataSource.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(sql);
+			sqlStatement.setString(1, userName);
+			ResultSet res = sqlStatement.executeQuery();
+			User userResult = null;
+			if(res.next())
+			{
+				userResult = new User();
+				userResult.setPersonName(res.getString("personName"));
+				userResult.setUserName(res.getString("userName"));
+				userResult.setUserPassword(res.getString("userPassword"));
+			}
+			res.close();
+			sqlStatement.close();
+			return userResult;
+		}
+		catch (SQLException exception)
+		{
+			throw new RuntimeException(exception);
+		}
+		finally
+		{
+			if(connection!=null)
+			{
+				try
+				{
+					connection.close();
+				}
+				catch (SQLException exception) { }
+			}
+		}
 	}
 
 	@Override
-	public User findByPersonName(String personName) {
+	public User findByPersonName(String personName)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -21,6 +21,14 @@
 			Invalid username or password!
 			Please retry.
 		</c:if>
+		<c:if test="${requestScope.isExist == false }">
+			Wrong username!
+			Please retry.
+		</c:if>
+		<c:if test="${requestScope.isWrong == true }">
+			Wrong password!
+			Please retry.
+		</c:if>
 		<form action="login" method="post">
 			<input type="text" id="userName" name="userName" value="User Id" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'User Id';}">
 			<input type="password" id="userPassword" name="userPassword" value="password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'password';}">

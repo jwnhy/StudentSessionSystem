@@ -7,14 +7,10 @@ import student.session.system.user.User;
 
 public class ApplicationContent {
 	public static void main(String args[]) {
-		ApplicationContext context = new ClassPathXmlApplicationContext("/spring/dataSource.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("/dataSource.xml");
 
 		JdbcUserDAO userDAO = (JdbcUserDAO) context.getBean("jdbcUserDAO");
-		User user = new User();
-		user.setPersonName("sdasdw");
-		user.setUserPassword("sdsdw");
-		user.setUserName("sdasd");
-		userDAO.insertUser(user);
+		User user2 = userDAO.findByUserName("sdasdw");
 
 	}
 }
