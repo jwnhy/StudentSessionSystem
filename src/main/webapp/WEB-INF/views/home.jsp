@@ -30,8 +30,8 @@
 			Please retry.
 		</c:if>
 		<form action="login" method="post">
-			<input type="text" id="userName" name="userName" value="User Id" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'User Id';}">
-			<input type="password" id="userPassword" name="userPassword" value="password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'password';}">
+			<input type="text" id="userName" name="userName" value="User Id" onfocus="this.value = '';">
+			<input type="password" id="userPassword" name="userPassword" value="password" onfocus="this.value = '';">
 	    <div class="forgot">
 	    	<a href="#">forgot Password</a>
 	    	<input id="submit" type="submit" value="Login" >

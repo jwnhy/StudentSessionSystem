@@ -17,9 +17,9 @@ public class LoginController {
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(Model model, UserForm userForm) {
 		User user = new User(userForm);
-		ApplicationContext context = new ClassPathXmlApplicationContext("/dataSource.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("/spring/dataSource.xml");
 		JdbcUserDAO userDAO = (JdbcUserDAO) context.getBean("jdbcUserDAO"); 
-		
+		User user = 
 		if(user.isValid()!=true)
 		{
 			model.addAttribute("isValid", false);
@@ -31,13 +31,13 @@ public class LoginController {
 			model.addAttribute("isExist", false);
 			return "home";
 		}
-		if(userDAO.findByUserName(user.getUserName()).getUserPassword()!=user.getUserPassword())
+		if(!userDAO.findByUserName(user.getUserName()).getUserPassword().equals(user.getUserPassword()))
 		{
 			model.addAttribute("isWrong", true);
 			return "home";
 		}
 		
-		return "manager";
+		if()
 		
 	}
 }

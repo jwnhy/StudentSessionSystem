@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.management.RuntimeErrorException;
 import javax.sql.DataSource;
 
 import student.session.system.user.User;
@@ -23,7 +22,7 @@ public class JdbcUserDAO implements UserDAO {
 		// TODO Auto-generated method stub
 		Connection connection = null;
 		String sql = "INSERT INTO userTable " +
-				"(userName, userPassword, personName) VALUES (?, ?, ?)";
+				"(userName, userPassword, personName, userIdentity) VALUES (?, ?, ?, ?)";
 		if(findByUserName(user.getUserName())!=null)
 		{
 			return null;
@@ -35,6 +34,7 @@ public class JdbcUserDAO implements UserDAO {
 			sqlStatement.setString(1, user.getUserName());
 			sqlStatement.setString(2, user.getUserPassword());
 			sqlStatement.setString(3, user.getPersonName());
+			sqlStatement.setString(4, user.getUserIdentity().name());
 			sqlStatement.executeUpdate();
 			sqlStatement.close();
 		} 
@@ -60,14 +60,62 @@ public class JdbcUserDAO implements UserDAO {
 	public void deleteByUserName(String userName) 
 	{
 		// TODO Auto-generated method stub
-
+		String sql = "DELETE FROM userTable WHERE userName = ?";
+		Connection connection = null;
+		try
+		{
+			connection = dataSource.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(sql);
+			sqlStatement.setString(1, userName);
+			sqlStatement.executeUpdate();
+			sqlStatement.close();
+		}
+		catch (SQLException exception)
+		{
+			throw new RuntimeException(exception);
+		}
+		finally
+		{
+			if(connection!=null)
+			{
+				try
+				{
+					connection.close();
+				}
+				catch (SQLException exception) { }
+			}
+		}
 	}
 
 	@Override
 	public void deleteByPersonName(String personName)
 	{
 		// TODO Auto-generated method stub
-
+		String sql = "DELETE FROM userTable WHERE personName = ?";
+		Connection connection = null;
+		try
+		{
+			connection = dataSource.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(sql);
+			sqlStatement.setString(1, personName);
+			sqlStatement.executeUpdate();
+			sqlStatement.close();
+		}
+		catch (SQLException exception)
+		{
+			throw new RuntimeException(exception);
+		}
+		finally
+		{
+			if(connection!=null)
+			{
+				try
+				{
+					connection.close();
+				}
+				catch (SQLException exception) { }
+			}
+		}
 	}
 
 	@Override
