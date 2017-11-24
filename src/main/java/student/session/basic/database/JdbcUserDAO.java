@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import student.session.system.user.User;
-import student.session.system.user.userType;
+import student.session.system.user.UserType;
 @Service
 public class JdbcUserDAO implements UserDAO {
 	@Autowired
@@ -187,7 +187,7 @@ public class JdbcUserDAO implements UserDAO {
 			while(res.next())
 			{
 				user.setPersonName(res.getString("personName"));
-				user.setUserIdentity(userType.valueOf(res.getString("userIdentity")));
+				user.setUserIdentity(UserType.valueOf(res.getString("userIdentity")));
 				user.setUserName(res.getString("userName"));
 				user.setUserPassword(res.getString("userPassword"));
 				users.add(user);
@@ -217,7 +217,7 @@ public class JdbcUserDAO implements UserDAO {
 	public void changeByUserName(String userName, String columnName)
 	{
 		// TODO Auto-generated method stub
-		String sql = "UPDATE userTable SET ? WHERE userName = ?";
+		String sql = "UPDATE userTable SET userIdentity = ? WHERE userName = ?";
 		if(findByUserName(userName) == null)
 			return;
 		Connection connection = null;
@@ -225,8 +225,8 @@ public class JdbcUserDAO implements UserDAO {
 		{
 			connection = dataSource.getConnection();
 			PreparedStatement sqlStatement = connection.prepareStatement(sql);
-			sqlStatement.setString(0, columnName);
-			sqlStatement.setString(1, userName);
+			sqlStatement.setString(1, columnName);
+			sqlStatement.setString(2, userName);
 			sqlStatement.executeUpdate();
 		}
 		catch(SQLException sqlException)

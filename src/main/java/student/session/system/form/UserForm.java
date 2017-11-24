@@ -4,7 +4,7 @@ public class UserForm {
 	private String userName;
 	private String userPassword;
 	private String personName;
-	private userType userIdentity;
+	private UserType userIdentity;
 	public String getUserName() {
 		return userName;
 	}
@@ -18,12 +18,12 @@ public class UserForm {
 		this.userPassword = userPassword;
 	}
 
-	public userType getUserIdentity()
+	public UserType getUserIdentity()
 	{
 		return userIdentity;
 	}
 
-	public void setUserIdentity(userType userIdentity)
+	public void setUserIdentity(UserType userIdentity)
 	{
 		this.userIdentity = userIdentity;
 	}

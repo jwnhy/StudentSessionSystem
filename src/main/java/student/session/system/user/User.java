@@ -1,13 +1,11 @@
 package student.session.system.user;
 import student.session.system.form.UserForm;
-import student.session.basic.database.*;
-
 import java.util.regex.*;
 public class User {
 	private String userName;
 	private String userPassword;
 	private String personName;
-	private userType userIdentity;
+	private UserType userIdentity;
 	
 	public String getPersonName() {
 		return personName;
@@ -40,12 +38,12 @@ public class User {
 		this.userPassword = userPassword;
 	}
 
-	public userType getUserIdentity()
+	public UserType getUserIdentity()
 	{
 		return userIdentity;
 	}
 
-	public void setUserIdentity(userType userIdentity)
+	public void setUserIdentity(UserType userIdentity)
 	{
 		this.userIdentity = userIdentity;
 	}

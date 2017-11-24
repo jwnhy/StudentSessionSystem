@@ -1,15 +1,10 @@
 package student.session.system.controller;
-import student.session.basic.database.JdbcUserDAO;
 import student.session.basic.database.UserDAO;
 import student.session.system.form.UserForm;
 import student.session.system.user.User;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,9 +38,6 @@ public class LoginController {
 		}
 		else
 		{
-			user = userDAO.findByUserName(user.getUserName());
-			attributes.addAttribute("userName", user.getUserName());
-			attributes.addAttribute("personName", user.getPersonName());
 			return "redirect:/manager";
 		}	
 		
