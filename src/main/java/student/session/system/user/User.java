@@ -39,16 +39,6 @@ public class User {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	
-	public boolean isValid() {
-		Pattern userNamePattern = Pattern.compile("^\\w{5,10}");
-		Pattern userPasswordPattern = Pattern.compile("^\\w{5,16}");
-		if( userNamePattern.matcher(userName).matches()==true && 
-			userPasswordPattern.matcher(userPassword).matches()==true )
-			return true;
-		else return false;
-	}
-
 
 	public userType getUserIdentity()
 	{
@@ -59,7 +49,14 @@ public class User {
 	{
 		this.userIdentity = userIdentity;
 	}
-
-
+	
+	public boolean isValid() {
+		Pattern userNamePattern = Pattern.compile("^\\w{5,10}");
+		Pattern userPasswordPattern = Pattern.compile("^\\w{5,16}");
+		if( userNamePattern.matcher(userName).matches()==true && 
+			userPasswordPattern.matcher(userPassword).matches()==true )
+			return true;
+		else return false;
+	}
 
 }

@@ -22,6 +22,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="student.session.system.controller" />
+    <context:component-scan base-package="student.session.basic.database"></context:component-scan>
 	
 	
 	

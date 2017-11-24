@@ -6,20 +6,25 @@ import student.session.system.user.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginController {
+	@Autowired
+	@Qualifier("jdbcUserDAO")
+	private UserDAO userDAO;
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(Model model, UserForm userForm) {
+	public String login(Model model, UserForm userForm, RedirectAttributes attributes) {
 		User user = new User(userForm);
-		ApplicationContext context = new ClassPathXmlApplicationContext("/spring/dataSource.xml");
-		JdbcUserDAO userDAO = (JdbcUserDAO) context.getBean("jdbcUserDAO"); 
-		User user = 
+		//ApplicationContext context = new ClassPathXmlApplicationContext("/spring/dataSource.xml");
+		//JdbcUserDAO userDAO = (JdbcUserDAO) context.getBean("jdbcUserDAO"); 
 		if(user.isValid()!=true)
 		{
 			model.addAttribute("isValid", false);
@@ -36,8 +41,13 @@ public class LoginController {
 			model.addAttribute("isWrong", true);
 			return "home";
 		}
-		
-		if()
+		else
+		{
+			user = userDAO.findByUserName(user.getUserName());
+			attributes.addAttribute("userName", user.getUserName());
+			attributes.addAttribute("personName", user.getPersonName());
+			return "redirect:/manager";
+		}	
 		
 	}
 }

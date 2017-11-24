@@ -4,18 +4,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import student.session.system.user.User;
-
+import student.session.system.user.userType;
+@Service
 public class JdbcUserDAO implements UserDAO {
-
+	@Autowired
+	@Qualifier("dataSource")
 	private DataSource dataSource;
 
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
+
 
 	@Override
 	public User insertUser(User user) {
@@ -164,6 +169,82 @@ public class JdbcUserDAO implements UserDAO {
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ArrayList<User> getAllUser()
+	{
+		// TODO Auto-generated method stub
+		String sql = "SELECT * FROM userTable";
+		Connection connection = null;
+		try
+		{
+			connection = dataSource.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(sql);
+			ResultSet res = sqlStatement.executeQuery();
+			User user = new User();
+			ArrayList<User> users = new ArrayList<User>();
+			while(res.next())
+			{
+				user.setPersonName(res.getString("personName"));
+				user.setUserIdentity(userType.valueOf(res.getString("userIdentity")));
+				user.setUserName(res.getString("userName"));
+				user.setUserPassword(res.getString("userPassword"));
+				users.add(user);
+			}
+			res.close();
+			sqlStatement.close();
+			return users;
+		}
+		catch(SQLException exception)
+		{
+			throw new RuntimeException(exception);
+		}
+		finally
+		{
+			if(connection!=null)
+			{
+				try
+				{
+					connection.close();
+				}
+				catch(SQLException exception) { }
+			}
+		}
+	}
+
+	@Override
+	public void changeByUserName(String userName, String columnName)
+	{
+		// TODO Auto-generated method stub
+		String sql = "UPDATE userTable SET ? WHERE userName = ?";
+		if(findByUserName(userName) == null)
+			return;
+		Connection connection = null;
+		try
+		{
+			connection = dataSource.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(sql);
+			sqlStatement.setString(0, columnName);
+			sqlStatement.setString(1, userName);
+			sqlStatement.executeUpdate();
+		}
+		catch(SQLException sqlException)
+		{
+			throw new RuntimeException(sqlException);
+		}
+		finally
+		{
+			if(connection!=null)
+			{
+				try
+				{
+					connection.close();
+				}
+				catch(SQLException exception) { }
+			}
+		}
+		
 	}
 
 }
