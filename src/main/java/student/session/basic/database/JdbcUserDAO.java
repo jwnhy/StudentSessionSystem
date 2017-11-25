@@ -182,10 +182,11 @@ public class JdbcUserDAO implements UserDAO {
 			connection = dataSource.getConnection();
 			PreparedStatement sqlStatement = connection.prepareStatement(sql);
 			ResultSet res = sqlStatement.executeQuery();
-			User user = new User();
+			User user = null;
 			ArrayList<User> users = new ArrayList<User>();
 			while(res.next())
 			{
+				user = new User();
 				user.setPersonName(res.getString("personName"));
 				user.setUserIdentity(UserType.valueOf(res.getString("userIdentity")));
 				user.setUserName(res.getString("userName"));
