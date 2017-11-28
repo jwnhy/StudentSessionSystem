@@ -215,7 +215,7 @@ public class JdbcUserDAO implements UserDAO {
 	}
 
 	@Override
-	public void changeByUserName(String userName, String columnName)
+	public void changeIdentityByUserName(String userName, String columnName)
 	{
 		// TODO Auto-generated method stub
 		String sql = "UPDATE userTable SET userIdentity = ? WHERE userName = ?";
@@ -245,6 +245,13 @@ public class JdbcUserDAO implements UserDAO {
 				catch(SQLException exception) { }
 			}
 		}
+		
+	}
+
+	@Override
+	public void changeIntroductionByUserName(String userName, String introduction)
+	{
+		// TODO Auto-generated method stub
 		
 	}
 
