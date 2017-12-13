@@ -4,7 +4,7 @@
 <head>
 <title>Home</title>
 <!-- Custom Theme files -->
-<link href=<c:url value="/resources/css/style.css" /> rel="stylesheet" type="text/css" media="all"/>
+<link href=<c:url value="/resources/css/homeStyle.css" /> rel="stylesheet" type="text/css" media="all"/>
 <!-- Custom Theme files -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,16 +13,16 @@
 <!--Google Fonts-->
 <!--Google Fonts-->
 </head>
-<body background=<c:url value="/resources/image/banner.jpg"/>>
+<body background=<c:url value="/resources/image/homeBanner.jpg"/>>
 <div class="login">
 	<div class="login-top">
 		<h1>LOGIN FORM</h1>
 		<c:if test="${requestScope.isValid == false }">
-			Invalid username or password!
+			Invalid user name or password!
 			Please retry.
 		</c:if>
 		<c:if test="${requestScope.isExist == false }">
-			Wrong username!
+			Wrong user name!
 			Please retry.
 		</c:if>
 		<c:if test="${requestScope.isWrong == true }">
@@ -33,13 +33,12 @@
 			<input type="text" id="userName" name="userName" value="User Id" onfocus="this.value = '';">
 			<input type="password" id="userPassword" name="userPassword" value="password" onfocus="this.value = '';">
 	    <div class="forgot">
-	    	<a href="#">forgot Password</a>
 	    	<input id="submit" type="submit" value="Login" >
 	    </div>
 	    </form>
 	</div>
 	<div class="login-bottom">
-		<h3>New User &nbsp;<a href="#">Register</a> Here</h3>
+		<h3>New User &nbsp;<a href="signup">Register</a> Here</h3>
 	</div>
 </div>	
 

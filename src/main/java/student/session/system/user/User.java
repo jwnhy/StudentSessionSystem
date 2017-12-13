@@ -1,5 +1,6 @@
 package student.session.system.user;
 import student.session.system.form.UserForm;
+
 import java.util.regex.*;
 public class User {
 	private String userName;
@@ -19,6 +20,7 @@ public class User {
 	{
 		this.setUserName(form.getUserName());
 		this.setUserPassword(form.getUserPassword());
+		this.setPersonName(form.getPersonName());
 	}
 	
 	public User() {
@@ -56,5 +58,4 @@ public class User {
 			return true;
 		else return false;
 	}
-
 }

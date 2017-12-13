@@ -1,25 +1,21 @@
 package student.session.system.controller;
-import student.session.basic.database.UserDAO;
 import student.session.system.form.UserForm;
 import student.session.system.user.User;
+import student.session.system.user.UserType;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
-public class LoginController {
-	@Autowired
-	@Qualifier("jdbcUserDAO")
-	private UserDAO userDAO;
+public class LoginController extends BasicController {
+	
+	
+	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(Model model, UserForm userForm, RedirectAttributes attributes) {
 		User user = new User(userForm);
-		//ApplicationContext context = new ClassPathXmlApplicationContext("/spring/dataSource.xml");
-		//JdbcUserDAO userDAO = (JdbcUserDAO) context.getBean("jdbcUserDAO"); 
 		if(user.isValid()!=true)
 		{
 			model.addAttribute("isValid", false);
@@ -36,10 +32,12 @@ public class LoginController {
 			model.addAttribute("isWrong", true);
 			return "home";
 		}
-		else
+		user = userDAO.findByUserName(user.getUserName());
+		if(user.getUserIdentity()==UserType.TEACHER)
 		{
-			return "redirect:/manager";
-		}	
+			return "redirect:/teacher/"+user.getUserName();
+		}
+		else return "redirect:/manager";
 		
 	}
 }

@@ -11,7 +11,7 @@
 <link href=<c:url value="/resources/css/table.css" /> rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
-	<table id="table-2">
+	<table id="table-2" align="center">
 	<tr>
 		<th>UserName</th><th>PersonName</th><th>UserIdentity</th><th>ChangeIdentity</th>
 	</tr>
@@ -34,5 +34,12 @@
 	</tr>
 	</c:forEach>
 	</table>
+	<div align="center">
+		<form action="manager/changeDisplayLimit" method="POST">
+			Please input the day limit:
+			<input type="text" id="newDisplayLimit" name="newDisplayLimit" value="${displayLimit}">
+			<input id="submit" type="submit" value="Change"> 
+		</form>
+	</div>
 </body>
 </html>
