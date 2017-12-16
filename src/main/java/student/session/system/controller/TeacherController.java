@@ -28,6 +28,7 @@ public class TeacherController extends BasicController
 		model.addAttribute("errorInfo", errorInfo);
 		model.addAttribute("errorType", errorType);
 		model.addAttribute("presentDate", presentDate.format(dateFormatter));
+		model.addAttribute("sessions",sessionDAO.getAllSession(userDAO.findByUserName(userName)));
 		return "teacher";
 	}
 

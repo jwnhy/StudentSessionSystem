@@ -1,27 +1,25 @@
-/* Border styles */
-#table-2 thead, #table-2 tr {
-border-top-width: 1px;
-border-top-style: solid;
-border-top-color: rgb(230, 189, 189);
+/* Table Head */
+#table-7 thead th {
+background-color: rgb(81, 130, 187);
+color: #fff;
+border-bottom-width: 0;
 }
-#table-2 {
-border-bottom-width: 1px;
-border-bottom-style: solid;
-border-bottom-color: rgb(230, 189, 189);
+
+/* Column Style */
+#table-7 td {
+color: #000;
+}
+/* Heading and Column Style */
+#table-7 tr, #table-7 th {
+border-width: 1px;
+border-style: solid;
+border-color: rgb(81, 130, 187);
 }
 
 /* Padding and font style */
-#table-2 td, #table-2 th {
+#table-7 td, #table-7 th {
 padding: 5px 10px;
 font-size: 12px;
 font-family: Verdana;
-color: rgb(177, 106, 104);
-}
-
-/* Alternating background colors */
-#table-2 tr:nth-child(even) {
-background: rgb(238, 211, 210)
-}
-#table-2 tr:nth-child(odd) {
-background: #FFF
+font-weight: bold;
 }

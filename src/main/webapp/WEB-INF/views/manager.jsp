@@ -11,9 +11,9 @@
 <link href=<c:url value="/resources/css/table.css" /> rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
-	<table id="table-2" align="center">
+	<table id="table-7" align="center">
 	<tr>
-		<th>UserName</th><th>PersonName</th><th>UserIdentity</th><th>ChangeIdentity</th>
+		<th>User Name</th><th>Person Name</th><th>User Identity</th><th>Change Identity</th>
 	</tr>
 	<c:forEach items="${requestScope.users}" var="user">
 	<tr>
