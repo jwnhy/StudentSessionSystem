@@ -1,18 +1,27 @@
 package student.session.basic.database;
 
-import java.util.ArrayList;
-
 import student.session.system.session.Session;
 import student.session.system.session.SessionUser;
 import student.session.system.user.User;
 
+import java.util.ArrayList;
+import java.util.function.Function;
+
 public interface SessionUserDAO
 {
-	public ArrayList<SessionUser> getAllSessionUser(Session session);
-	public ArrayList<SessionUser> getAllSessionUser(User user);
-	public SessionUser getSpecificSessionUser(User user, Session session);
-	public void insertSessionUser(User user, Session session);
-	public void insertSessionUser(SessionUser sessionUser);
-	public void changeSessionUserUsedTime(User user, Session session, int newUsedTime);
-	public void changeSessionUserTimes(User user, Session session, int newTimes);
+    ArrayList<SessionUser> getAllSessionUser(Session session);
+
+    ArrayList<SessionUser> getAllSessionUser(User user);
+
+    ArrayList<SessionUser> getAllSessionUser(User user, Function<SessionUser, Boolean> condition);
+
+    SessionUser getSpecificSessionUser(User user, Session session);
+
+    void insertSessionUser(User user, Session session);
+
+    void insertSessionUser(SessionUser sessionUser);
+
+    void deleteSessionUser(User user, Session session);
+
+    void deleteSessionUser(SessionUser sessionUser);
 }

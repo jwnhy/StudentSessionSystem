@@ -1,25 +1,33 @@
 package student.session.basic.database;
-import java.time.LocalDate;
+
+import student.session.system.user.User;
+
 import java.util.ArrayList;
 import java.util.function.Function;
 
-import student.session.system.user.*;
-public interface UserDAO {
-	public User insertUser(User user);
-	
-	public void deleteByUserName(String userName);
-	public void deleteByPersonName(String personName);
-	
-	public User findByUserName(String userName);
-	public User findByPersonName(String personName);
-	
-	public void changeIdentityByUserName(String userName, String columnName);
-	public void changeIntroductionByUserName(String userName, String introduction);
-	public void changeAvailableDateLimitByUserName(String userName, LocalDate availableDateLimit);
-	public void changeAddressByUserName(String userName, String address);
-	
-	public ArrayList<User> getAllUser();
-	public ArrayList<User> getAllUser(Function<User, Boolean> condition);
+public interface UserDAO
+{
+    User insertUser(User user);
+
+    void deleteByUserName(String userName);
+
+    void deleteByPersonName(String personName);
+
+    User findByUserName(String userName);
+
+    User findByPersonName(String personName);
+
+    void changeIdentityByUserName(String userName, String columnName);
+
+    void changeIntroductionByUserName(String userName, String introduction);
+
+    void changeAddressByUserName(String userName, String address);
+
+    ArrayList<User> getAllUser();
+
+    ArrayList<User> getAllUser(Function<User, Boolean> condition);
+
+    void changeUserInfo(User newUser);
 
 }
 
