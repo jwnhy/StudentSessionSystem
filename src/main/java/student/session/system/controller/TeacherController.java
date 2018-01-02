@@ -69,14 +69,13 @@ public class TeacherController extends BasicController
         LocalDate startDate = LocalDate.parse(sessionForm.getSessionStartDate());
         LocalDate endDate = LocalDate.parse(sessionForm.getSessionEndDate());
         DayOfWeek dayOfWeek = DayOfWeek.valueOf(sessionForm.getDayOfWeek());
-        LocalDate countDate = startDate;
-        while (countDate.isBefore(endDate))
+        while (startDate.isBefore(endDate))
         {
             Session session = null;
-            if (countDate.getDayOfWeek().equals(dayOfWeek))
+            if (startDate.getDayOfWeek().equals(dayOfWeek))
             {
                 session = new Session();
-                session.setSessionDate(countDate);
+                session.setSessionDate(startDate);
                 session.setSessionStartTime(LocalTime.parse(sessionForm.getSessionStartTime()));
                 session.setSessionEndTime(LocalTime.parse(sessionForm.getSessionEndTime()));
                 session.setSessionAddress(sessionForm.getSessionAddress());
@@ -94,6 +93,7 @@ public class TeacherController extends BasicController
                     return "redirect:/teacher/" + userName;
                 }
             }
+            startDate = startDate.plusDays(1);
         }
         return "redirect:/teacher/" + userName;
 
@@ -115,7 +115,30 @@ public class TeacherController extends BasicController
         }
         return "redirect:/teacher/" + userName;
     }
+    @RequestMapping(value = "/teacher/{userName}/deleteMultiSession", method = RequestMethod.POST)
+    public String deleteMultiSession(Model model, String[] sessionList, @PathVariable String userName)
+    {
+        Teacher teacher =(Teacher) userDAO.findByUserName(userName);
+        if(sessionList==null)
+        {
+            model.addAttribute("errorInfo", "No session selected");
+            model.addAttribute("errorType", "deleteError");
+            return "redirect:/teacher/" + userName;
+        }
 
+        try
+        {
+            for(String s:sessionList)
+                teacher.deleteSession(Long.valueOf(s));
+        }
+        catch (SessionException e)
+        {
+            model.addAttribute("errorInfo", e.getMessage());
+            model.addAttribute("errorType", "deleteError");
+            return "redirect:/teacher/" + userName;
+        }
+        return "redirect:/teacher/" + userName;
+    }
     @RequestMapping(value = "/teacher/{userName}/editSession/{sessionID}", method = RequestMethod.GET)
     public String editSession(Model model, @PathVariable String userName, @PathVariable Long sessionID,
                               @RequestParam(required = false) String errorInfo,
@@ -144,16 +167,24 @@ public class TeacherController extends BasicController
         teacher.replaceSession(sessionID, new Session(sessionForm));
         return "redirect:/teacher/" + userName;
     }
+    @RequestMapping(value = "/teacher/{userName}/studentManage")
+    public String studentManage(Model model, @PathVariable String userName)
+    {
+        Teacher teacher = (Teacher) userDAO.findByUserName(userName);
+        model.addAttribute("studentList", userDAO.getAllUser((User user)->user.getUserIdentity().equals(UserType.STUDENT)));
+        model.addAttribute("teacherStudentList",teacherStudentDAO.getAllStudent(teacher));
+        return "studentManage";
+    }
 
-    @RequestMapping(value = "/teacher/{userName}/addStudent/{sessionID}", method = RequestMethod.POST)
-    public String addStudent(Model model, String[] studentNameList, @PathVariable String userName, @PathVariable Long sessionID)
+    @RequestMapping(value = "/teacher/{userName}/addStudent", method = RequestMethod.POST)
+    public String addStudent(Model model, String[] studentNameList, @PathVariable String userName)
     {
         Teacher teacher = (Teacher) userDAO.findByUserName(userName);
         if (studentNameList == null)
         {
             model.addAttribute("errorInfo", "Please check at least a student");
             model.addAttribute("errorType", "InsertError");
-            return "redirect:/teacher/" + userName + "/editSession/" + sessionID;
+            return "redirect:/teacher/" + userName + "/studentManage";
         }
         try
         {
@@ -165,14 +196,28 @@ public class TeacherController extends BasicController
             model.addAttribute("errorInfo", e.getMessage());
             model.addAttribute("errorType", "ExistError");
         }
-
-        return "redirect:/teacher/" + userName + "/editSession/" + sessionID;
+        return "redirect:/teacher/" + userName + "/studentManage";
     }
-    @RequestMapping(value = "/teacher/{userName}/addViolatedTimes/{studentName}/{sessionID}")
-    public String addViolatedTimes(Model model, @PathVariable String userName, @PathVariable String studentName, @PathVariable Long sessionID)
+    @RequestMapping(value = "/teacher/{userName}/deleteMultiStudent", method = RequestMethod.POST)
+    public String deleteMultiStudent(Model model, String[] teacherStudentNameList, @PathVariable String userName)
+    {
+        Teacher teacher = (Teacher) userDAO.findByUserName(userName);
+        if(teacherStudentNameList == null)
+        {
+            model.addAttribute("errorInfo", "Please check at least a student");
+            model.addAttribute("errorType", "InsertError");
+            return "redirect:/teacher/" + userName + "/studentManage";
+        }
+        for (String s : teacherStudentNameList)
+            teacher.deleteStudent((Student) userDAO.findByPersonName(s));
+
+        return "redirect:/teacher/" + userName + "/studentManage";
+    }
+    @RequestMapping(value = "/teacher/{userName}/addViolatedTimes/{studentName}")
+    public String addViolatedTimes(Model model, @PathVariable String userName, @PathVariable String studentName)
     {
         Teacher teacher = (Teacher) userDAO.findByUserName(userName);
         teacher.addViolatedTimes((Student)userDAO.findByUserName(studentName));
-        return "redirect:/teacher/" + userName + "/editSession/" + sessionID;
+        return "redirect:/teacher/" + userName + "/studentManage";
     }
 }

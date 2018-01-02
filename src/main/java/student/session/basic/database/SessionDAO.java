@@ -9,21 +9,18 @@ import java.util.function.Function;
 
 public interface SessionDAO
 {
-    public void insertSession(User user, Session session);
+    void insertSession(User user, Session session);
 
-    public void deleteSession(User user, Session session);
+    void changeSession(User user, Session oldSession, Session newSession);
 
-    public void changeSession(User user, Session oldSession, Session newSession);
+    ArrayList<Session> getAllSession(User user);
 
-    public ArrayList<Session> getAllSession(User user);
+    ArrayList<Session> getAllSession(User user, Function<Session, Boolean> condition);
 
-    public ArrayList<Session> getAllSession(User user, Function<Session, Boolean> condition);
-
-    public long getSessionID(User user, Session session);
 
     Session getSession(Long sessionID);
 
-    public void deleteSession(Long sessionID);
+    void deleteSession(Long sessionID);
 
     ArrayList<Session> getAllSession(User user, LocalDate sessionDate);
 }

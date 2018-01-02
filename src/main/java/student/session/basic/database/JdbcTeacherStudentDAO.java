@@ -97,7 +97,7 @@ public class JdbcTeacherStudentDAO implements TeacherStudentDAO
     public void deleteStudent(Teacher teacher, Student student)
     {
         Connection connection = null;
-        String sql = "DELETE FORM teacherStudentTable WHERE studentName = ? AND teacherName = ?";
+        String sql = "DELETE FROM teacherStudentTable WHERE studentName = ? AND teacherName = ?";
         try
         {
             connection = dataSource.getConnection();
@@ -324,6 +324,32 @@ public class JdbcTeacherStudentDAO implements TeacherStudentDAO
             PreparedStatement sqlStatement = connection.prepareStatement(sql);
             sqlStatement.setString(1, teacher.getUserName());
             sqlStatement.setString(2, student.getUserName());
+            sqlStatement.execute();
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+        finally
+        {
+            if (connection != null)
+                try
+                {
+                    connection.close();
+                }
+                catch (SQLException e)
+                {
+                }
+        }
+    }
+    public void monthlyClean()
+    {
+        String sql = "UPDATE teacherStudentTable SET userTimes = 0,violatedTimes = 0,userUsedTime = 0";
+        Connection connection = null;
+        try
+        {
+            connection = dataSource.getConnection();
+            PreparedStatement sqlStatement = connection.prepareStatement(sql);
             sqlStatement.execute();
         }
         catch (SQLException e)

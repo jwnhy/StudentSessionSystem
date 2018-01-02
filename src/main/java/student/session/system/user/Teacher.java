@@ -36,8 +36,6 @@ public class Teacher extends User
 
     public void insertSession(Session session) throws SessionException
     {
-        if (sessionDAO.getSessionID(this, session) != 0)
-            throw new SessionException("Insert Session Conflits Same Session!");
         for (Session s : sessionDAO.getAllSession(this, (Session temp) ->
                 temp.getSessionDate().equals(session.getSessionDate())))
         {
@@ -61,8 +59,10 @@ public class Teacher extends User
     {
         if (sessionDAO.getSession(sessionID) == null)
             throw new SessionException("No such session");
+        sessionUserDAO.deleteSessionUser(sessionDAO.getSession(sessionID));
         sessionDAO.deleteSession(sessionID);
     }
+
 
     public void deleteExpiredSession()
     {
@@ -96,7 +96,7 @@ public class Teacher extends User
 
     public void deleteStudent(Student student)
     {
-        teacherStudentDAO.setStudent(this, student);
+        teacherStudentDAO.deleteStudent(this, student);
     }
 
     public ArrayList<Student> getAllStudent()

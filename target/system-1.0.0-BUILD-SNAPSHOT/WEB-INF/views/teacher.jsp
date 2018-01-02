@@ -13,40 +13,64 @@
     <link href="${bootstrapCSS }" rel="stylesheet" type="text/css"/>
     <spring:url value="/resources/js/bootstrap.js" var="bootstrapJS"/>
     <script language="javascript" src="${bootstrapJS }"></script>
+    <script type="application/javascript" language="JavaScript">
+        function select() {
+            var checkBox = document.getElementsByTagName("input");
+            for (i = 0; i < checkBox.length; i++) {
+                if (checkBox[i].type == "checkbox") {
+                    checkBox[i].checked = !checkBox[i].checked;
+                }
+            }
+        }
+    </script>
 </head>
 <body background="<c:url value="/resources/image/homeBanner.jpg"/>">
-<div class="row">
-    <div class="col-2">
-        <a class="btn btn-primary" href="/changeInfo/${userName}">Change Info</a>
-    </div>
-    <div class="col-2">
-        <a class="btn btn-primary" href="/">Log out</a>
-    </div>
+<div class="btn-group">
+    <a class="btn btn-primary" href="/">Log out</a>
+    <a class="btn btn-primary" href="/changeInfo/${userName}">Change Info</a>
+    <a class="btn btn-primary" href="/teacher/${userName}/studentManage">Student Manage</a>
+    <a class="btn btn-primary" href="/teacher/${userName}/lastMonthReport">Last Month Report</a>
+    <a class="btn btn-primary" href="/teacher/${userName}/appointInfo">Appointment Info</a>
 </div>
 <table class="table table-hover table-dark" align="center">
-    <tr>
-        <th>Session Date</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Session Address</th>
-        <th>Times Limit</th>
-        <th>Total Time Limit</th>
-    </tr>
-    <c:forEach items="${requestScope.sessions}" var="session">
+    <form action="/teacher/${userName}/deleteMultiSession" method="post">
+        <thead>
         <tr>
-            <td>${session.getSessionDate() }</td>
-            <td>${session.getSessionStartTime() }</td>
-            <td>${session.getSessionEndTime()}</td>
-            <td>${session.getSessionAddress()}</td>
-            <td>${session.getTimesLimit() }</td>
-            <td>${session.getTotalTimeLimit() }</td>
-            <td><a
-                    href="/teacher/${userName }/editSession/${session.getSessionID()}"
-                    class="btn btn-primary">Edit</a> <a
-                    href="/teacher/${userName }/deleteSession/${session.getSessionID()}"
-                    class="btn btn-primary">Del</a></td>
+            <th>Session Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Session Address</th>
+            <th>Times Limit</th>
+            <th>Total Time Limit</th>
+            <th align="center"><a href="#" class="btn btn-primary" onclick="select()">(Un)Select</a></th>
+            <th><input type="submit" class="btn btn-primary" value="Delete"></th>
         </tr>
-    </c:forEach>
+        </thead>
+        <c:forEach items="${requestScope.sessions}" var="session">
+            <tr>
+                <td>${session.getSessionDate() }</td>
+                <td>${session.getSessionStartTime() }</td>
+                <td>${session.getSessionEndTime()}</td>
+                <td>${session.getSessionAddress()}</td>
+                <td>${session.getTimesLimit() }</td>
+                <td>
+                        ${session.getTotalTimeLimit() }
+                </td>
+                <td align="center">
+                    <input align="middle" type="checkbox" id="sessionList" name="sessionList"
+                           value="${session.getSessionID()}">
+                </td>
+                <td class="btn-group">
+                    <a
+                        href="/teacher/${userName }/editSession/${session.getSessionID()}"
+                        class="btn btn-primary">Edit</a>
+                    <a
+                            href="/teacher/${userName }/deleteSession/${session.getSessionID()}"
+                            class="btn btn-primary">Del</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </form>
     <form action="/teacher/${userName}/insertSession/"
           method="post">
         <tr>

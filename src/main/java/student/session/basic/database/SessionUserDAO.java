@@ -24,4 +24,9 @@ public interface SessionUserDAO
     void deleteSessionUser(User user, Session session);
 
     void deleteSessionUser(SessionUser sessionUser);
+
+    void deleteSessionUser(Session session);
+
+    void deleteSessionUser(User user);
+
 }

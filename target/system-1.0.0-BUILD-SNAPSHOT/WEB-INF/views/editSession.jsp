@@ -14,6 +14,18 @@
     <link href="${bootstrapCSS }" rel="stylesheet" type="text/css"/>
     <spring:url value="/resources/js/bootstrap.js" var="bootstrapJS"/>
     <script language="javascript" src="${bootstrapJS }"></script>
+    <script type="application/javascript" language="JavaScript">
+        function select(id)
+        {
+            var checkBox = document.getElementsByTagName("input");
+            for(i = 0;i < checkBox.length;i++){
+                if(checkBox[i].type == "checkbox"&&checkBox[i].id==id)
+                {
+                    checkBox[i].checked = !checkBox[i].checked;
+                }
+            }
+        }
+    </script>
 </head>
 <body background="<c:url value="/resources/image/homeBanner.jpg"/>">
 <div class="container">
@@ -63,53 +75,12 @@
                     <tr>
                         <td><input class="btn btn-primary" type="submit"
                                    value="Edit Session"></td>
+                        <td><a href="/teacher/${userName}" class="btn btn-primary">Back</a> </td>
                     </tr>
                 </table>
             </form>
         </div>
-        <div class="col">
-            <div class="row">
-                <form
-                        action="/teacher/${userName}/addStudent/${session.getSessionID()}"
-                        method="post">
-                    >
-                    <table class="table table-hover table-dark">
-                        <tr>
-                            <th>Name</th>
-                            <th></th>
-                        </tr>
-                        <c:forEach items="${requestScope.studentList }" var="student">
-                            <tr>
-                                <td>${student.getPersonName() }</td>
-                                <td><input class="form-check" type="checkbox" id="studentNameList" name="studentNameList"
-                                           value="${student.getPersonName()}"></td>
 
-                            </tr>
-                        </c:forEach>
-                        <tr>
-                            <td><input class="btn btn-primary" type="submit" value="Add Student"></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-            <div class="row">
-                <table class="table table-hover table-dark">
-                    <tr>
-                        <th>Your Student</th>
-                        <th>Violated</th>
-                        <th></th>
-                    </tr>
-                    <c:forEach items="${requestScope.teacherStudentList }" var="student">
-                        <tr>
-                            <td><span class="glyphicon glyphicon-user"
-                                      aria-hidden="true"></span> ${student.getPersonName() }</td>
-                            <td>${student.getViolatedTimes(userName)}</td>
-                            <td><a href="/teacher/${userName}/addViolatedTimes/${student.getUserName()}/${session.getSessionID()}" class="btn btn-primary">
-                                Add Violated Times</a> </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </div>
         </div>
     </div>
     <c:if
@@ -118,6 +89,5 @@
             Please retry.
         </div>
     </c:if>
-</div>
 </body>
 </html>

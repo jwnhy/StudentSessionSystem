@@ -28,7 +28,7 @@
             <input type="text" placeholder="Real Name" id="personName" name="personName">
             <div class="forgot">
                 <input id="submit" type="submit" value="Sign Up">
-
+                <a href="#" onclick="javascript :history.go(-1);" class="btn btn-primary">Back</a>
             </div>
         </form>
     </div>

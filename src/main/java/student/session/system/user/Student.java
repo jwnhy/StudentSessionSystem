@@ -53,6 +53,8 @@ public class Student extends User
             throw new SessionException("Already Over Times Limits");
         else if (teacherStudentDAO.getUserUsedTime((Teacher) s.getUser(), this) > s.getTotalTimeLimit())
             throw new SessionException("Already Over Total Time Limit");
+        else if(teacherStudentDAO.getViolatedTimes((Teacher)s.getUser(),this)>StaticVar.violatedLimit)
+            throw new SessionException("Over Violated Limits");
         for (Session temp : getStudentSession())
         {
             if (temp.getSessionID().equals(s.getSessionID()))
@@ -68,11 +70,15 @@ public class Student extends User
     public ArrayList<Session> getStudentSession()
     {
         ArrayList<Session> sessionRes = new ArrayList<>();
-        for (SessionUser s : sessionUserDAO.getAllSessionUser(this,(SessionUser temp)->
+        for (SessionUser s : sessionUserDAO.getAllSessionUser(this,(SessionUser temp)->(
                 sessionDAO
                         .getSession(temp.getSessionID())
                         .getSessionDate()
-                        .isAfter(LocalDate.now())))
+                        .isAfter(LocalDate.now())||
+                sessionDAO
+                        .getSession(temp.getSessionID())
+                        .getSessionDate()
+                        .isEqual(LocalDate.now()))))
             sessionRes.add(sessionDAO.getSession(s.getSessionID()));
         return sessionRes;
     }

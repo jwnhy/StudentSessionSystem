@@ -29,20 +29,19 @@ public class JdbcSessionUserDAO implements SessionUserDAO
     {
         // TODO Auto-generated method stub
         Connection connection = null;
-        long sessionID = sessionDAO.getSessionID(session.getUser(), session);
         String sql = "SELECT * FROM sessionUserTable WHERE sessionID = ?";
         ArrayList<SessionUser> sessionUserList = new ArrayList<SessionUser>();
         try
         {
             connection = dataSource.getConnection();
             PreparedStatement sqlStatement = connection.prepareStatement(sql);
-            sqlStatement.setLong(1, sessionID);
+            sqlStatement.setLong(1, session.getSessionID());
             ResultSet res = sqlStatement.executeQuery();
             while (res.next())
             {
                 SessionUser sessionUser = new SessionUser();
-                sessionUser.setSessionID(sessionID);
-                sessionUser.setUserName(session.getUser().getUserName());
+                sessionUser.setSessionID(session.getSessionID());
+                sessionUser.setUserName(res.getString("userName"));
                 sessionUserList.add(sessionUser);
             }
         }
@@ -88,7 +87,7 @@ public class JdbcSessionUserDAO implements SessionUserDAO
             {
                 SessionUser sessionUser = new SessionUser();
                 sessionUser.setSessionID(res.getLong("sessionID"));
-                sessionUser.setUserName(user.getUserName());
+                sessionUser.setUserName(res.getString("userName"));
                 if(condition.apply(sessionUser))
                     sessionUserList.add(sessionUser);
             }
@@ -181,6 +180,69 @@ public class JdbcSessionUserDAO implements SessionUserDAO
             PreparedStatement sqlStatement = connection.prepareStatement(sql);
             sqlStatement.setString(1, sessionUser.getUserName());
             sqlStatement.setLong(2, sessionUser.getSessionID());
+            sqlStatement.execute();
+        }
+        catch (SQLException exception)
+        {
+            throw new RuntimeException(exception);
+        }
+        finally
+        {
+            if (connection != null)
+            {
+                try
+                {
+                    connection.close();
+                }
+                catch (SQLException e)
+                {
+                }
+            }
+
+        }
+    }
+
+    @Override
+    public void deleteSessionUser(Session session)
+    {
+        Connection connection = null;
+        String sql = "DELETE FROM sessionUserTable WHERE sessionID = ?";
+        try
+        {
+            connection = dataSource.getConnection();
+            PreparedStatement sqlStatement = connection.prepareStatement(sql);
+            sqlStatement.setLong(1, session.getSessionID());
+            sqlStatement.execute();
+        }
+        catch (SQLException exception)
+        {
+            throw new RuntimeException(exception);
+        }
+        finally
+        {
+            if (connection != null)
+            {
+                try
+                {
+                    connection.close();
+                }
+                catch (SQLException e)
+                {
+                }
+            }
+
+        }
+    }
+    @Override
+    public void deleteSessionUser(User user)
+    {
+        Connection connection = null;
+        String sql = "DELETE FROM sessionUserTable WHERE userName = ?";
+        try
+        {
+            connection = dataSource.getConnection();
+            PreparedStatement sqlStatement = connection.prepareStatement(sql);
+            sqlStatement.setString(1, user.getUserName());
             sqlStatement.execute();
         }
         catch (SQLException exception)

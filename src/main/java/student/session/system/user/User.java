@@ -152,9 +152,7 @@ public class User
     {
         Pattern userNamePattern = Pattern.compile("^\\w{5,10}");
         Pattern userPasswordPattern = Pattern.compile("^\\w{5,16}");
-        if (userNamePattern.matcher(userName).matches() == true &&
-                userPasswordPattern.matcher(userPassword).matches() == true)
-            return true;
-        else return false;
+        return userNamePattern.matcher(userName).matches() == true &&
+                userPasswordPattern.matcher(userPassword).matches() == true;
     }
 }

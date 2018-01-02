@@ -72,46 +72,7 @@ public class JdbcSessionDAO implements SessionDAO
         }
     }
 
-    @Override
-    public void deleteSession(User user, Session session)
-    {
-        // TODO Auto-generated method stub
-        ArrayList<Session> sessionList = getAllSession(user);
-        Connection connection = null;
-        String sql = "DELETE FROM sessionTable WHERE userName = ? AND sessionStartTime = ? AND sessionDate = ?";
-        if (sessionList.indexOf(session) == -1)
-        {
-            logger.error("Delete Session Failed No Such Session");
-            return;
-        }
-        try
-        {
-            connection = dataSource.getConnection();
-            PreparedStatement sqlStatement = connection.prepareStatement(sql);
-            sqlStatement.setString(1, user.getUserName());
-            sqlStatement.setString(2, session.getSessionStartTime().format(timeFormatter));
-            sqlStatement.setString(3, session.getSessionDate().format(dateFormatter));
-            sqlStatement.executeUpdate();
-            sqlStatement.close();
-        }
-        catch (SQLException exception)
-        {
-            throw new RuntimeException(exception);
-        }
-        finally
-        {
-            if (connection != null)
-            {
-                try
-                {
-                    connection.close();
-                }
-                catch (SQLException e)
-                {
-                }
-            }
-        }
-    }
+
 
     @Override
     public void changeSession(User user, Session oldSession, Session newSession)
@@ -205,39 +166,7 @@ public class JdbcSessionDAO implements SessionDAO
         }
     }
 
-    @Override
-    public long getSessionID(User user, Session session)
-    {
-        // TODO Auto-generated method stub
-        Connection connection = null;
-        String sql = "SELECT sessionID FROM sessionTable WHERE userName = ? AND sessionStartTime = ? AND sessionDate = ?";
-        try
-        {
-            connection = dataSource.getConnection();
-            PreparedStatement sqlStatement = connection.prepareStatement(sql);
-            sqlStatement.setString(1, user.getUserName());
-            sqlStatement.setString(2, session.getSessionStartTime().toString());
-            sqlStatement.setString(3, session.getSessionDate().toString());
-        }
-        catch (SQLException exception)
-        {
-            throw new RuntimeException(exception);
-        }
-        finally
-        {
-            if (connection != null)
-            {
-                try
-                {
-                    connection.close();
-                }
-                catch (SQLException e)
-                {
-                }
-            }
-        }
-        return 0;
-    }
+
 
     @Override
     public Session getSession(Long sessionID)

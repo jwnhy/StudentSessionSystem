@@ -16,16 +16,13 @@
 <body background=<c:url value="/resources/image/homeBanner.jpg"/>>
 
 <div class="container">
-    <div class="row">
-        <div class="col-2">
-            <a class="btn btn-primary" href="/changeInfo/${userName}">Change Info</a>
-        </div>
-        <div class="col-2">
+    <div class="btn-group">
             <a class="btn btn-primary" href="/">Log out</a>
-        </div>
+            <a class="btn btn-primary" href="/changeInfo/${userName}">Change Info</a>
     </div>
     <div class="row">
         <div class="col">
+            <c:if test="${!requestScope.sessions.isEmpty()}">
             <table class="table table-hover table-dark">
                 <tr>
                     <th>Teacher</th>
@@ -35,7 +32,7 @@
                 </tr>
                 <c:forEach items="${requestScope.sessions}" var="session">
                     <tr>
-                        <td>${session.getUser().getUserName()}</td>
+                        <td><a class="hyperlink" href="/showInfo/${session.getUser().getUserName()}">${session.getUser().getUserName()}</a></td>
                         <td>${session.getSessionDate()}</td>
                         <td>${session.getSessionStartTime()}~${session.getSessionEndTime()}</td>
                         <td>${session.getSessionAddress()}</td>
@@ -44,10 +41,19 @@
                     </tr>
                 </c:forEach>
             </table>
+            </c:if>
+            <c:if test="${requestScope.sessions.isEmpty()}">
+                <div class="alert-info alert">
+                    No Available Session Yet
+                </div>
+            </c:if>
         </div>
     </div>
+
+
     <div class="row">
         <div class="col">
+            <c:if test="${!requestScope.studentSessions.isEmpty()}">
             <table class="table table-hover table-dark">
                 <tr>
                     <th>Teacher</th>
@@ -57,7 +63,7 @@
                 </tr>
                 <c:forEach items="${requestScope.studentSessions}" var="session">
                     <tr>
-                        <td>${session.getUser().getUserName()}</td>
+                        <td><a class="hyperlink" href="/showTeacherInfo/${session.getUser().getUserName()}">${session.getUser().getUserName()}</a></td>
                         <td>${session.getSessionDate()}</td>
                         <td>${session.getSessionStartTime()}~${session.getSessionEndTime()}</td>
                         <td>${session.getSessionAddress()}</td>
@@ -66,6 +72,12 @@
                     </tr>
                 </c:forEach>
             </table>
+            </c:if>
+            <c:if test="${requestScope.studentSessions.isEmpty()}">
+                <div class="alert-info alert">
+                    You didn't appoint any session
+                </div>
+            </c:if>
         </div>
     </div>
     <c:if

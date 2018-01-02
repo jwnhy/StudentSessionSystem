@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import student.session.basic.StaticVar;
 import student.session.system.session.Session;
+import student.session.system.session.SessionUser;
 import student.session.system.user.Student;
 import student.session.system.user.Teacher;
+import student.session.system.user.User;
 import student.session.system.user.UserType;
 
 @Controller
@@ -43,20 +45,24 @@ public class AdminController extends BasicController
 
     private void safeChange(String userName)
     {
-        if (userDAO.findByUserName(userName).getUserIdentity().equals(UserType.TEACHER))
+        User user = userDAO.findByUserName(userName);
+        if (user.getUserIdentity().equals(UserType.TEACHER))
         {
-            for (Session s : sessionDAO.getAllSession(userDAO.findByUserName(userName)))
+            Teacher teacher = (Teacher) user;
+            for (Session s : sessionDAO.getAllSession(teacher))
             {
-                sessionDAO.deleteSession(s.getUser(), s);
+                sessionUserDAO.deleteSessionUser(s);
+                sessionDAO.deleteSession(s.getSessionID());
             }
+            for (Student s : teacherStudentDAO.getAllStudent(teacher))
+                teacherStudentDAO.deleteStudent(teacher, s);
         }
-        else if (userDAO.findByUserName(userName).getUserIdentity().equals(UserType.STUDENT))
+        else if (user.getUserIdentity().equals(UserType.STUDENT))
         {
-            Student s = (Student) userDAO.findByUserName(userName);
-            for (Teacher teacher : teacherStudentDAO.getAllTeacher(s))
-            {
-                teacher.deleteStudent(s);
-            }
+            Student student = (Student) user;
+            for (Teacher t : teacherStudentDAO.getAllTeacher(student))
+                t.deleteStudent(student);
+            sessionUserDAO.deleteSessionUser(student);
         }
     }
 

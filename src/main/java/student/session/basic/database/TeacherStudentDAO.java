@@ -7,23 +7,26 @@ import java.util.ArrayList;
 
 public interface TeacherStudentDAO
 {
-    public ArrayList<Student> getAllStudent(Teacher teacher);
+    ArrayList<Student> getAllStudent(Teacher teacher);
 
-    public ArrayList<Teacher> getAllTeacher(Student student);
+    ArrayList<Teacher> getAllTeacher(Student student);
 
-    public void deleteStudent(Teacher teacher, Student student);
+    void deleteStudent(Teacher teacher, Student student);
 
-    public void setStudent(Teacher teacher, Student student);
+    void setStudent(Teacher teacher, Student student);
 
-    public int getViolatedTimes(Teacher teacher, Student student);
+    int getViolatedTimes(Teacher teacher, Student student);
 
-    public int getUserUsedTime(Teacher teacher, Student student);
+    int getUserUsedTime(Teacher teacher, Student student);
 
-    public int getUserTimes(Teacher teacher, Student student);
+    int getUserTimes(Teacher teacher, Student student);
 
-    public void incViolatedTime(Teacher teacher, Student student);
+    void incViolatedTime(Teacher teacher, Student student);
 
-    public void incUserUsedTime(Teacher teacher, Student student, int time);
+    void incUserUsedTime(Teacher teacher, Student student, int time);
 
-    public void incUserTimes(Teacher teacher, Student student);
+    void incUserTimes(Teacher teacher, Student student);
+
+    void monthlyClean();
+
 }
