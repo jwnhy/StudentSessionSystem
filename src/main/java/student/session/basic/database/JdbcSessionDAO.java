@@ -22,8 +22,8 @@ import java.util.function.Function;
 @Repository
 public class JdbcSessionDAO implements SessionDAO
 {
-    public static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
-    public static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+    private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
     @Autowired
@@ -129,7 +129,7 @@ public class JdbcSessionDAO implements SessionDAO
             PreparedStatement sqlStatement = connection.prepareStatement(sql);
             sqlStatement.setString(1, user.getUserName());
             ResultSet res = sqlStatement.executeQuery();
-            ArrayList<Session> sessionList = new ArrayList<Session>();
+            ArrayList<Session> sessionList = new ArrayList<>();
             while (res.next())
             {
                 Session session = new Session();
@@ -230,7 +230,7 @@ public class JdbcSessionDAO implements SessionDAO
             sqlStatement.setString(1, user.getUserName());
             sqlStatement.setString(2, sessionDate.format(dateFormatter));
             ResultSet res = sqlStatement.executeQuery();
-            ArrayList<Session> sessionList = new ArrayList<Session>();
+            ArrayList<Session> sessionList = new ArrayList<>();
             while (res.next())
             {
                 Session session = new Session();
@@ -281,7 +281,7 @@ public class JdbcSessionDAO implements SessionDAO
             PreparedStatement sqlStatement = connection.prepareStatement(sql);
             sqlStatement.setString(1, user.getUserName());
             ResultSet res = sqlStatement.executeQuery();
-            ArrayList<Session> sessionList = new ArrayList<Session>();
+            ArrayList<Session> sessionList = new ArrayList<>();
             while (res.next())
             {
                 Session session = new Session();

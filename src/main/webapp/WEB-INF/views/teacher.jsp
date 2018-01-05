@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso8859-1"/>
-    <title>Teacher Page</title>
+    <title>Teacher</title>
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCSS"/>
     <link href="${bootstrapCSS }" rel="stylesheet" type="text/css"/>
     <spring:url value="/resources/js/bootstrap.js" var="bootstrapJS"/>
@@ -26,13 +26,14 @@
 </head>
 <body background="<c:url value="/resources/image/homeBanner.jpg"/>">
 <div class="btn-group">
-    <a class="btn btn-primary" href="/">Log out</a>
+    <a class="btn btn-primary" href="<c:url value="/"/>">Log out</a>
     <a class="btn btn-primary" href="/changeInfo/${userName}">Change Info</a>
     <a class="btn btn-primary" href="/teacher/${userName}/studentManage">Student Manage</a>
     <a class="btn btn-primary" href="/teacher/${userName}/lastMonthReport">Last Month Report</a>
     <a class="btn btn-primary" href="/teacher/${userName}/appointInfo">Appointment Info</a>
+    <a class="btn btn-primary" href="/showMessage/${userName}">My Message</a>
 </div>
-<table class="table table-hover table-dark" align="center">
+<table class="table table-hover table-dark table-bordered" align="center">
     <form action="/teacher/${userName}/deleteMultiSession" method="post">
         <thead>
         <tr>
@@ -52,10 +53,8 @@
                 <td>${session.getSessionStartTime() }</td>
                 <td>${session.getSessionEndTime()}</td>
                 <td>${session.getSessionAddress()}</td>
-                <td>${session.getTimesLimit() }</td>
-                <td>
-                        ${session.getTotalTimeLimit() }
-                </td>
+                <td>${session.getTimesLimit()}</td>
+                <td>${session.getTotalTimeLimit() }&nbsp;Hours</td>
                 <td align="center">
                     <input align="middle" type="checkbox" id="sessionList" name="sessionList"
                            value="${session.getSessionID()}">
@@ -82,7 +81,7 @@
             <td><input class="form-control" type="time"
                        name="sessionEndTime" id="sessionEndTime" value="16:00"></td>
             <td><input class="form-control" type="text"
-                       name="sessionAddress" id="sessionAddress"></td>
+                       name="sessionAddress" id="sessionAddress" maxlength="55"></td>
             <td><input class="form-control" type="number" name="timesLimit"
                        id="timesLimit" min="1" max="30" value="10"></td>
             <td><input class="form-control" type="number"
@@ -95,7 +94,7 @@
 </table>
 <form action="/teacher/${userName}/insertMultiSession/"
       method="post">
-    <table class="table table-hover table-dark" align="center">
+    <table class="table table-hover table-dark table-bordered" align="center">
         <tr>
             <th>Start Date</th>
             <th>End Date</th>
@@ -128,7 +127,7 @@
             <td><input class="form-control" type="time"
                        name="sessionEndTime" id="sessionEndTime" value="16:00"></td>
             <td><input class="form-control" type="text"
-                       name="sessionAddress" id="sessionAddress"></td>
+                       name="sessionAddress" id="sessionAddress" maxlength="55"></td>
             <td><input class="form-control" type="number"
                        name="timesLimit" id="timesLimit" min="1" max="30"
                        value="10"></td>

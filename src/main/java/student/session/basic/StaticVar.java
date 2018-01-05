@@ -5,4 +5,5 @@ public class StaticVar
     public static int displayLimit = 30;
     public static int cancelLimit = 3;
     public static int violatedLimit = 3;
+    public static int studentLimit = 2;
 }

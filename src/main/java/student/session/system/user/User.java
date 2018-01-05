@@ -13,10 +13,10 @@ import java.util.regex.Pattern;
 @Service
 public class User
 {
-    protected UserDAO userDAO;
-    protected SessionDAO sessionDAO;
-    protected SessionUserDAO sessionUserDAO;
-    protected TeacherStudentDAO teacherStudentDAO;
+    UserDAO userDAO;
+    SessionDAO sessionDAO;
+    SessionUserDAO sessionUserDAO;
+    TeacherStudentDAO teacherStudentDAO;
     private String userName;
     private String userPassword;
     private String personName;
@@ -67,7 +67,7 @@ public class User
     public void alterUser(UserForm form) throws InfoException
     {
         Pattern userPasswordPattern = Pattern.compile("^\\w{5,16}");
-        if (userPasswordPattern.matcher(form.getUserPassword()).matches() == true)
+        if (userPasswordPattern.matcher(form.getUserPassword()).matches())
             this.setUserPassword(form.getUserPassword());
         else throw new InfoException("Info is not right");
         if(form.getPersonName().length()>90||form.getUserAddress().length()>90||form.getUserIntroduction().length()>90)
@@ -152,7 +152,7 @@ public class User
     {
         Pattern userNamePattern = Pattern.compile("^\\w{5,10}");
         Pattern userPasswordPattern = Pattern.compile("^\\w{5,16}");
-        return userNamePattern.matcher(userName).matches() == true &&
-                userPasswordPattern.matcher(userPassword).matches() == true;
+        return userNamePattern.matcher(userName).matches() &&
+                userPasswordPattern.matcher(userPassword).matches();
     }
 }

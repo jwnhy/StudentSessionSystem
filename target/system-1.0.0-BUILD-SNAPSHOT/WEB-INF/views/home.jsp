@@ -4,7 +4,7 @@
          pageEncoding="iso8859-1" %>
 <html>
 <head>
-    <title>Home</title>
+    <title>Session System</title>
     <!-- Custom Theme files -->
     <link href=
           <c:url value="/resources/css/homeStyle.css"/> rel="stylesheet" type="text/css" media="all"/>
@@ -20,7 +20,7 @@
 <body background=<c:url value="/resources/image/homeBanner.jpg"/>>
 <div class="login">
     <div class="login-top">
-        <h1>LOGIN FORM</h1>
+        <h1>LOGIN HERE</h1>
         <c:if test="${requestScope.isValid == false }">
             Invalid user name or password!
             Please retry.

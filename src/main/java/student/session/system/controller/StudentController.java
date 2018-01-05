@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import student.session.basic.MessageBuffer;
 import student.session.basic.SessionException;
+import student.session.basic.StaticVar;
 import student.session.system.user.Student;
 
 @Controller
@@ -19,8 +21,11 @@ public class StudentController extends BasicController
         Student student = (Student) userDAO.findByUserName(userName);
         model.addAttribute("sessions", student.getAvailableSession());
         model.addAttribute("studentSessions", student.getStudentSession());
+        model.addAttribute("sessionUserDAO", sessionUserDAO);
+        model.addAttribute("studentLimit", StaticVar.studentLimit);
         model.addAttribute("errorInfo", errorInfo);
         model.addAttribute("errorType", errorType);
+
         return "student";
     }
 

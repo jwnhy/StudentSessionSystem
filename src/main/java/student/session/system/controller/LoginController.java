@@ -18,7 +18,7 @@ public class LoginController extends BasicController
     public String login(Model model, UserForm userForm, RedirectAttributes attributes)
     {
         User user = new User(userForm);
-        if (user.isValid() != true)
+        if (!user.isValid())
         {
             model.addAttribute("isValid", false);
             return "home";

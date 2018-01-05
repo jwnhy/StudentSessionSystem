@@ -25,7 +25,7 @@ public interface TeacherStudentDAO
 
     void incUserUsedTime(Teacher teacher, Student student, int time);
 
-    void incUserTimes(Teacher teacher, Student student);
+    void incUserTimes(Teacher teacher, Student student,int times);
 
     void monthlyClean();
 

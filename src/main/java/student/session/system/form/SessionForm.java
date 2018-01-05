@@ -3,12 +3,12 @@ package student.session.system.form;
 
 public class SessionForm
 {
-    String sessionDate;
-    String sessionStartTime;
-    String sessionEndTime;
-    String sessionAddress;
-    int timesLimit;        //max times one can visit
-    int totalTimeLimit;    //total max time one can visit
+    private String sessionDate;
+    private String sessionStartTime;
+    private String sessionEndTime;
+    private String sessionAddress;
+    private int timesLimit;        //max times one can visit
+    private int totalTimeLimit;    //total max time one can visit
 
     public String getSessionDate()
     {

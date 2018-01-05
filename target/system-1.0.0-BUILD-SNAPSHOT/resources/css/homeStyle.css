@@ -149,7 +149,7 @@ body {
     text-align: center;
     font-size: 27px;
     font-weight: 500;
-    color: #F45B4B;
+    color: #007BFF;
     margin: 0px 0px 20px 0px;
 }
 
@@ -190,9 +190,9 @@ body {
 .forgot a {
     font-size: 13px;
     font-weight: 500;
-    color: #F45B4B;
+    color: #007BFF;
     display: inline-block;
-    border-right: 2px solid #F45B4B;
+    border-right: 2px solid #007BFF;
     padding: 0px 7px 0px 0px;
 }
 
@@ -201,7 +201,7 @@ body {
 }
 
 .forgot input[type="submit"] {
-    background: #F45B4B;
+    background: #007BFF;
     color: #FFF;
     font-size: 17px;
     font-weight: 400;
@@ -231,7 +231,7 @@ body {
 }
 
 .login-bottom {
-    background: #E15748;
+    background: #007BFF;
     padding: 30px 65px;
     border-radius: 0px 0px 25px 25px;
     -webkit-border-radius: 0px 0px 25px 25px;
@@ -275,7 +275,7 @@ body {
 .copyright p a {
     font-size: 15px;
     font-weight: 400;
-    color: #E15748;
+    color: #007BFF;
 }
 
 .copyright p a:hover {

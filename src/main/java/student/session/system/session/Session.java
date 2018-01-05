@@ -8,14 +8,14 @@ import java.time.LocalTime;
 
 public class Session
 {
-    LocalDate sessionDate;
-    LocalTime sessionStartTime;
-    LocalTime sessionEndTime;
-    String sessionAddress;
-    Long sessionID;
-    int timesLimit;        //max times one can visit
-    int totalTimeLimit;    //total max time one can visit
-    User user;
+    private LocalDate sessionDate;
+    private LocalTime sessionStartTime;
+    private LocalTime sessionEndTime;
+    private String sessionAddress;
+    private Long sessionID;
+    private int timesLimit;        //max times one can visit
+    private int totalTimeLimit;    //total max time one can visit
+    private User user;
 
     public Session()
     {

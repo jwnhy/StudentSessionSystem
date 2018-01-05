@@ -67,9 +67,7 @@ public class Teacher extends User
     public void deleteExpiredSession()
     {
         for (Session s : sessionDAO.getAllSession(this, (Session temp) ->
-        {
-            return temp.getSessionDate().isBefore(LocalDate.now());
-        }))
+                temp.getSessionDate().isBefore(LocalDate.now())))
         {
             try
             {

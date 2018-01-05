@@ -23,9 +23,9 @@
             Please retry.
         </c:if>
         <form action="signup" method="POST">
-            <input type="text" placeholder="User Name" id="userName" name="userName">
-            <input type="password" placeholder="User Password" id="userPassword" name="userPassword">
-            <input type="text" placeholder="Real Name" id="personName" name="personName">
+            <input type="text" placeholder="User Name" id="userName" name="userName" maxlength="20">
+            <input type="password" placeholder="User Password" id="userPassword" name="userPassword" maxlength="20">
+            <input type="text" placeholder="Real Name" id="personName" name="personName" maxlength="20">
             <div class="forgot">
                 <input id="submit" type="submit" value="Sign Up">
                 <a href="#" onclick="javascript :history.go(-1);" class="btn btn-primary">Back</a>

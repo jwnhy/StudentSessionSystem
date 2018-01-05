@@ -34,12 +34,14 @@
             <form
                     action="/teacher/${userName}/editSession/${session.getSessionID()}"
                     method="post">
-                <table class="table table-hover table-dark">
+                <table class="table table-hover table-dark table-bordered">
                     <tr>
+                        <th>Info Type</th>
                         <th>Original Information</th>
                         <th>New Information</th>
                     </tr>
                     <tr>
+                        <td>Session Date</td>
                         <td>${session.getSessionDate() }</td>
                         <td><input class="form-control" type="date"
                                    name="sessionDate" id="sessionDate"
@@ -47,26 +49,31 @@
                                            value=${requestScope.presentDate }></td>
                     </tr>
                     <tr>
+                        <td>Start Time</td>
                         <td>${session.getSessionStartTime() }</td>
                         <td><input class="form-control" type="time"
                                    name="sessionStartTime" id="sessionStartTime" value="14:00"></td>
                     </tr>
                     <tr>
+                        <td>End Time</td>
                         <td>${session.getSessionEndTime()}</td>
                         <td><input class="form-control" type="time"
                                    name="sessionEndTime" id="sessionEndTime" value="16:00"></td>
                     </tr>
                     <tr>
+                        <td>Address</td>
                         <td>${session.getSessionAddress()}</td>
                         <td><input class="form-control" type="text"
-                                   name="sessionAddress" id="sessionAddress"></td>
+                                   name="sessionAddress" id="sessionAddress" value="${session.getSessionAddress()}"></td>
                     </tr>
                     <tr>
+                        <td>Times Limit</td>
                         <td>${session.getTimesLimit() }</td>
                         <td><input class="form-control" type="number"
                                    name="timesLimit" id="timesLimit" min="1" max="30" value="10"></td>
                     </tr>
                     <tr>
+                        <td>Time Length Limit</td>
                         <td>${session.getTotalTimeLimit() }</td>
                         <td><input class="form-control" type="number"
                                    name="totalTimeLimit" id="totalTimeLimit" min="10" max="60"

@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso8859-1"/>
-    <title>Teacher Page</title>
+    <title>User Info Page</title>
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCSS"/>
     <link href="${bootstrapCSS }" rel="stylesheet" type="text/css"/>
     <spring:url value="/resources/js/bootstrap.js" var="bootstrapJS"/>
@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <table class="table-dark table table-hover">
+                <table class="table-dark table-bordered table table-hover">
                     <tr>
                         <td>${userType} Name</td>
                         <td>${requestScope.user.getPersonName()}</td>
@@ -30,6 +30,29 @@
                     <tr>
                         <td>${userType} Address</td>
                         <td>${requestScope.user.getUserAddress()}</td>
+                    </tr>
+                    <c:if test="${userType=='student'}">
+                        <tr>
+                            <td>Violated Times</td>
+                            <td>${violatedTimes}</td>
+                        </tr>
+                        <tr>
+                            <td>Used Time Length</td>
+                            <td>${userUsedTime}</td>
+                        </tr>
+                        <tr>
+                            <td>Session Times</td>
+                            <td>${userTimes}</td>
+                        </tr>
+                    </c:if>
+                    <tr>
+                        <td>Send a Message</td>
+                        <td>
+                            <form action="/sendMessage/${userName}" method="post">
+                                <input class="form-control" type="text" name="message" id="message" maxlength="55">
+                                <input class="btn btn-primary" type="submit" value="Send" onclick="alert('Message Sent')">
+                            </form>
+                        </td>
                     </tr>
                     <tr>
                         <td>

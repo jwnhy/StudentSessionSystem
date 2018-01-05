@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Edit Session Page</title>
+    <title>Student Manage</title>
 
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCSS"/>
     <link href="${bootstrapCSS }" rel="stylesheet" type="text/css"/>
@@ -32,7 +32,7 @@
             <form
                     action="/teacher/${userName}/addStudent/${session.getSessionID()}"
                     method="post">
-                <table class="table table-hover table-dark">
+                <table class="table table-hover table-dark table-bordered">
                     <tr>
                         <th>Name</th>
                         <th><a href="#" class="btn btn-primary" onclick="select('studentNameList')">(Un)Select</a></th>
@@ -54,7 +54,7 @@
         </div>
         <form action="/teacher/${userName}/deleteMultiStudent" method="post">
         <div class="col">
-            <table class="table table-hover table-dark">
+            <table class="table table-hover table-dark table-bordered">
                 <tr>
                     <th>Your Student</th>
                     <th>Violated</th>

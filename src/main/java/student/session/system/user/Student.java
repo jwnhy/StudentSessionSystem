@@ -11,6 +11,7 @@ import student.session.system.session.Session;
 import student.session.system.session.SessionUser;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Student extends User
@@ -55,13 +56,15 @@ public class Student extends User
             throw new SessionException("Already Over Total Time Limit");
         else if(teacherStudentDAO.getViolatedTimes((Teacher)s.getUser(),this)>StaticVar.violatedLimit)
             throw new SessionException("Over Violated Limits");
+        else if(sessionUserDAO.getAllSessionUser(sessionDAO.getSession(sessionID)).size()+1>StaticVar.studentLimit)
+            throw new SessionException("The Session is full");
         for (Session temp : getStudentSession())
         {
             if (temp.getSessionID().equals(s.getSessionID()))
                 throw new SessionException("Already Appointed");
         }
         sessionUserDAO.insertSessionUser(this, s);
-        teacherStudentDAO.incUserTimes((Teacher) s.getUser(), this);
+        teacherStudentDAO.incUserTimes((Teacher) s.getUser(), this,1);
         teacherStudentDAO.incUserUsedTime((Teacher) s.getUser(), this, s.getTimeLength().getHour());
 
 
@@ -78,7 +81,11 @@ public class Student extends User
                 sessionDAO
                         .getSession(temp.getSessionID())
                         .getSessionDate()
-                        .isEqual(LocalDate.now()))))
+                        .isEqual(LocalDate.now())) &&
+                sessionDAO
+                        .getSession(temp.getSessionID())
+                        .getSessionStartTime()
+                        .isBefore(LocalTime.now())))
             sessionRes.add(sessionDAO.getSession(s.getSessionID()));
         return sessionRes;
     }
@@ -88,7 +95,10 @@ public class Student extends User
         Session s = sessionDAO.getSession(sessionID);
         if (LocalDate.now().plusDays(StaticVar.cancelLimit).isAfter(s.getSessionDate()))
             throw new SessionException("Too Late To Cancel");
+        teacherStudentDAO.incUserTimes((Teacher) s.getUser(), this,-1);
+        teacherStudentDAO.incUserUsedTime((Teacher) s.getUser(), this, -s.getTimeLength().getHour());
         sessionUserDAO.deleteSessionUser(this, s);
+
     }
     public int getViolatedTimes(Teacher teacher)
     {

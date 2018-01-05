@@ -100,7 +100,7 @@ public class JdbcUserDAO implements UserDAO
     }
 
     @Override
-    public User insertUser(User user)
+    public void insertUser(User user)
     {
         // TODO Auto-generated method stub
         Connection connection = null;
@@ -108,7 +108,7 @@ public class JdbcUserDAO implements UserDAO
                 "(userName, userPassword, personName, userIdentity) VALUES (?, ?, ?, ?)";
         if (findByUserName(user.getUserName()) != null)
         {
-            return null;
+            return;
         }
         try
         {
@@ -140,7 +140,6 @@ public class JdbcUserDAO implements UserDAO
                 }
             }
         }
-        return user;
     }
 
     @Override
@@ -216,7 +215,7 @@ public class JdbcUserDAO implements UserDAO
             PreparedStatement sqlStatement = connection.prepareStatement(sql);
             ResultSet res = sqlStatement.executeQuery();
             User user = null;
-            ArrayList<User> users = new ArrayList<User>();
+            ArrayList<User> users = new ArrayList<>();
             while (res.next())
             {
                 user = newUser(UserType.valueOf(res.getString("userIdentity")));
@@ -367,7 +366,7 @@ public class JdbcUserDAO implements UserDAO
             PreparedStatement sqlStatement = connection.prepareStatement(sql);
             ResultSet res = sqlStatement.executeQuery();
             User user = null;
-            ArrayList<User> users = new ArrayList<User>();
+            ArrayList<User> users = new ArrayList<>();
             while (res.next())
             {
                 user = newUser(UserType.valueOf(res.getString("userIdentity")));

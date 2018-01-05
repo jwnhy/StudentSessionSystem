@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Edit Session Page</title>
+    <title>Change Info Page</title>
 
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCSS"/>
     <link href="${bootstrapCSS }" rel="stylesheet" type="text/css"/>
@@ -19,19 +19,19 @@
     <div class="row">
         <div class="col">
             <form action="/changeInfo/${presentUser.getUserName()}" method="post">
-                <table class="table table-hover table-dark">
+                <table class="table table-hover table-dark table-bordered">
                     <tr>
                         <th>Original Info</th>
                         <th>New Info</th>
                     </tr>
                     <tr>
                         <td>${requestScope.presentUser.getPersonName()}</td>
-                        <td><input type="text" value="${presentUser.getPersonName()}" class="form-control"
+                        <td><input maxlength="20" type="text" value="${presentUser.getPersonName()}" class="form-control"
                                    name="personName" id="personName"></td>
                     </tr>
                     <tr>
                         <td>${requestScope.presentUser.getUserPassword()}</td>
-                        <td><input type="password" value="${presentUser.getUserPassword()}" class="form-control"
+                        <td><input maxlength="20" type="password" value="${presentUser.getUserPassword()}" class="form-control"
                                    name="userPassword" id="userPassword"></td>
                     </tr>
                     <tr>
@@ -47,7 +47,10 @@
                         </td>
                     </tr>
                 </table>
-                <input type="submit" class="btn btn-primary" value="Change Info">
+                <div class="btn-group">
+                    <input type="submit" class="btn btn-primary" value="Change Info">
+                    <a href="/${userType}/${userName}" class="btn btn-primary">Back</a>
+                </div>
             </form>
         </div>
     </div>

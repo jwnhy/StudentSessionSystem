@@ -36,7 +36,7 @@
 
     <div class="row">
         <div class="col">
-            <table class="table table-hover table-dark">
+            <table class="table table-hover table-dark table-bordered">
                 <tr>
                     <th>Student Name</th>
                     <th>Session Date</th>

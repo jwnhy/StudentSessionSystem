@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 public interface UserDAO
 {
-    User insertUser(User user);
+    void insertUser(User user);
 
     void deleteByUserName(String userName);
 

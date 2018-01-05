@@ -4,11 +4,11 @@ import student.session.system.user.User;
 
 public class SessionUser
 {
-    String userName;
-    Long sessionID;
-    int userTimes;
-    int userUsedTime;
-    int violatedTimes;
+    private String userName;
+    private Long sessionID;
+    private int userTimes;
+    private int userUsedTime;
+    private int violatedTimes;
 
     public SessionUser(User user, Session session)
     {

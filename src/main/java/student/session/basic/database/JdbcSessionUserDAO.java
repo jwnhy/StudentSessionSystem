@@ -18,7 +18,7 @@ import java.util.function.Function;
 @Repository
 public class JdbcSessionUserDAO implements SessionUserDAO
 {
-    @Autowired(required = true)
+    @Autowired()
     @Qualifier("jdbcSessionDAO")
     SessionDAO sessionDAO;
     @Autowired
@@ -30,7 +30,7 @@ public class JdbcSessionUserDAO implements SessionUserDAO
         // TODO Auto-generated method stub
         Connection connection = null;
         String sql = "SELECT * FROM sessionUserTable WHERE sessionID = ?";
-        ArrayList<SessionUser> sessionUserList = new ArrayList<SessionUser>();
+        ArrayList<SessionUser> sessionUserList = new ArrayList<>();
         try
         {
             connection = dataSource.getConnection();
@@ -76,7 +76,7 @@ public class JdbcSessionUserDAO implements SessionUserDAO
     {
         Connection connection = null;
         String sql = "SELECT * FROM sessionUserTable WHERE userName = ?";
-        ArrayList<SessionUser> sessionUserList = new ArrayList<SessionUser>();
+        ArrayList<SessionUser> sessionUserList = new ArrayList<>();
         try
         {
             connection = dataSource.getConnection();

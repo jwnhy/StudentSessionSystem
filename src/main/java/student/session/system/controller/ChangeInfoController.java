@@ -22,6 +22,7 @@ public class ChangeInfoController extends BasicController
         model.addAttribute("presentUser", user);
         model.addAttribute("errorInfo", errorInfo);
         model.addAttribute("errorType", errorType);
+        model.addAttribute("userType", user.getUserIdentity().toString().toLowerCase());
         return "changeInfo";
     }
 

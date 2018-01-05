@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso8859-1"/>
-    <title>Insert title here</title>
+    <title>Student</title>
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCSS"/>
     <link href="${bootstrapCSS }" rel="stylesheet" type="text/css"/>
     <spring:url value="/resources/js/bootstrap.js" var="bootstrapJS"/>
@@ -17,18 +17,21 @@
 
 <div class="container">
     <div class="btn-group">
-            <a class="btn btn-primary" href="/">Log out</a>
-            <a class="btn btn-primary" href="/changeInfo/${userName}">Change Info</a>
+        <a class="btn btn-primary" href="<c:url value="/"/>">Log out</a>
+        <a class="btn btn-primary" href="/changeInfo/${userName}">Change Info</a>
+        <a class="btn btn-primary" href="/showInfo/${userName}">Show My Info</a>
+        <a class="btn btn-primary" href="/showMessage/${userName}">My Message</a>
     </div>
     <div class="row">
         <div class="col">
             <c:if test="${!requestScope.sessions.isEmpty()}">
-            <table class="table table-hover table-dark">
+            <table class="table table-hover table-dark table-bordered">
                 <tr>
                     <th>Teacher</th>
                     <th>Date</th>
                     <th>Time</th>
                     <th>Address</th>
+                    <th>Size</th>
                 </tr>
                 <c:forEach items="${requestScope.sessions}" var="session">
                     <tr>
@@ -36,6 +39,7 @@
                         <td>${session.getSessionDate()}</td>
                         <td>${session.getSessionStartTime()}~${session.getSessionEndTime()}</td>
                         <td>${session.getSessionAddress()}</td>
+                        <td>${sessionUserDAO.getAllSessionUser(session).size()}/${studentLimit}</td>
                         <td><a class="btn btn-primary"
                                href="/student/${userName}/appointSession/${session.getSessionID()}">Appoint</a></td>
                     </tr>
@@ -54,7 +58,7 @@
     <div class="row">
         <div class="col">
             <c:if test="${!requestScope.studentSessions.isEmpty()}">
-            <table class="table table-hover table-dark">
+            <table class="table table-hover table-dark table-bordered">
                 <tr>
                     <th>Teacher</th>
                     <th>Date</th>

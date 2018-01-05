@@ -2,14 +2,14 @@ package student.session.system.form;
 
 public class MultiSessionForm
 {
-    String sessionStartDate;
-    String sessionEndDate;
-    String sessionStartTime;
-    String sessionEndTime;
-    String sessionAddress;
-    String dayOfWeek;
-    int timesLimit;        //max times one can visit
-    int totalTimeLimit;    //total max time one can visit
+    private String sessionStartDate;
+    private String sessionEndDate;
+    private String sessionStartTime;
+    private String sessionEndTime;
+    private String sessionAddress;
+    private String dayOfWeek;
+    private int timesLimit;        //max times one can visit
+    private int totalTimeLimit;    //total max time one can visit
 
     public String getSessionStartDate()
     {

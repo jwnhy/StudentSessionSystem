@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Edit Session Page</title>
+    <title>Last Month Report</title>
 
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCSS"/>
     <link href="${bootstrapCSS }" rel="stylesheet" type="text/css"/>
@@ -18,7 +18,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <table class="table table-hover table-dark">
+            <table class="table table-hover table-dark table-bordered">
                 <tr>
                     <td>Session Number</td><td>${requestScope.userTimes}</td>
                 </tr>

@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import student.session.system.session.Session;
 import student.session.system.session.SessionUser;
+import student.session.system.user.Student;
 import student.session.system.user.Teacher;
+import student.session.system.user.User;
+import student.session.system.user.UserType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,7 +23,24 @@ public class InfoController extends BasicController
     @RequestMapping(value = "/showInfo/{userName}",method = RequestMethod.GET)
     public String userInfo(Model model, @PathVariable String userName)
     {
-        model.addAttribute("user", userDAO.findByUserName(userName));
+        User user = userDAO.findByUserName(userName);
+        model.addAttribute("user", user);
+        model.addAttribute("userType",user.getUserIdentity().toString().toLowerCase());
+        if(user.getUserIdentity()== UserType.STUDENT)
+        {
+            int violatedTimes = 0, userUsedTime = 0, userTimes=0;
+            Student student = (Student) user;
+            for(Teacher teacher:teacherStudentDAO.getAllTeacher(student))
+            {
+                violatedTimes += student.getViolatedTimes(teacher);
+                userUsedTime += teacherStudentDAO.getUserUsedTime(teacher,student);
+                userTimes += teacherStudentDAO.getUserTimes(teacher,student);
+            }
+            model.addAttribute("violatedTimes",violatedTimes);
+            model.addAttribute("userUsedTime",userUsedTime);
+            model.addAttribute("userTimes",userTimes);
+        }
+
         return "userInfo";
     }
 

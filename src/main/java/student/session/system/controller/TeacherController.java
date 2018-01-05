@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import student.session.basic.MessageBuffer;
 import student.session.basic.SessionException;
 import student.session.basic.TeacherStudentException;
 import student.session.system.form.MultiSessionForm;
@@ -38,9 +39,7 @@ public class TeacherController extends BasicController
         model.addAttribute("presentDate", presentDate.format(dateFormatter));
         model.addAttribute("nextMonthDate", presentDate.plusMonths(2).format(dateFormatter));
         model.addAttribute("sessions", sessionDAO.getAllSession(userDAO.findByUserName(userName), (Session temp) ->
-        {
-            return temp.getSessionDate().isAfter(LocalDate.now()) || temp.getSessionDate().equals(LocalDate.now());
-        }));
+                temp.getSessionDate().isAfter(LocalDate.now()) || temp.getSessionDate().equals(LocalDate.now())));
         return "teacher";
     }
 
@@ -168,11 +167,15 @@ public class TeacherController extends BasicController
         return "redirect:/teacher/" + userName;
     }
     @RequestMapping(value = "/teacher/{userName}/studentManage")
-    public String studentManage(Model model, @PathVariable String userName)
+    public String studentManage(Model model, @PathVariable String userName,
+                                @RequestParam(required = false) String errorInfo,
+                                @RequestParam(required = false) String errorType)
     {
         Teacher teacher = (Teacher) userDAO.findByUserName(userName);
         model.addAttribute("studentList", userDAO.getAllUser((User user)->user.getUserIdentity().equals(UserType.STUDENT)));
         model.addAttribute("teacherStudentList",teacherStudentDAO.getAllStudent(teacher));
+        model.addAttribute("errorInfo", errorInfo);
+        model.addAttribute("errorType", errorType);
         return "studentManage";
     }
 

@@ -25,7 +25,7 @@ public class JdbcTeacherStudentDAO implements TeacherStudentDAO
     {
         Connection connection = null;
         String sql = "SELECT * FROM teacherStudentTable WHERE teacherName = ?";
-        ArrayList<Student> resList = new ArrayList<Student>();
+        ArrayList<Student> resList = new ArrayList<>();
         try
         {
             ResultSet res = null;
@@ -61,7 +61,7 @@ public class JdbcTeacherStudentDAO implements TeacherStudentDAO
     {
         Connection connection = null;
         String sql = "SELECT * FROM teacherStudentTable WHERE studentName = ?";
-        ArrayList<Teacher> resList = new ArrayList<Teacher>();
+        ArrayList<Teacher> resList = new ArrayList<>();
         try
         {
             ResultSet res = null;
@@ -286,8 +286,7 @@ public class JdbcTeacherStudentDAO implements TeacherStudentDAO
 
     public void incUserUsedTime(Teacher teacher, Student student, int time)
     {
-        String sql = "UPDATE teacherStudentTable SET userUsedTime = userUsedTime + " + time
-                + " WHERE teacherName = ? AND studentName = ?";
+        String sql = "UPDATE teacherStudentTable SET userUsedTime = userUsedTime + " +"("+time+")"+ " WHERE teacherName = ? AND studentName = ?";
         Connection connection = null;
         try
         {
@@ -314,9 +313,9 @@ public class JdbcTeacherStudentDAO implements TeacherStudentDAO
         }
     }
 
-    public void incUserTimes(Teacher teacher, Student student)
+    public void incUserTimes(Teacher teacher, Student student, int times)
     {
-        String sql = "UPDATE teacherStudentTable SET userTimes = userTimes + 1 WHERE teacherName = ? AND studentName = ?";
+        String sql = "UPDATE teacherStudentTable SET userTimes = userTimes + "+"("+times+")"+" WHERE teacherName = ? AND studentName = ?";
         Connection connection = null;
         try
         {
