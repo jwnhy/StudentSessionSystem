@@ -102,9 +102,25 @@ public class Teacher extends User
         return teacherStudentDAO.getAllStudent(this);
     }
 
-    public void replaceSession(Long sessionID, Session newSession)
+    public void replaceSession(Long sessionID, Session newSession) throws SessionException
     {
         newSession.setUser(this);
+        for (Session s : sessionDAO.getAllSession(this, (Session temp) ->
+                temp.getSessionDate().equals(newSession.getSessionDate())))
+        {
+            LocalTime startTime1 = s.getSessionStartTime();
+            LocalTime endTime1 = s.getSessionEndTime();
+            LocalTime startTime2 = newSession.getSessionStartTime();
+            LocalTime endTime2 = newSession.getSessionEndTime();
+            try
+            {
+                isBetween(startTime1, startTime2, endTime1, endTime2);
+            }
+            catch (SessionException e)
+            {
+                throw e;
+            }
+        }
         sessionDAO.changeSession(this, sessionDAO.getSession(sessionID), newSession);
     }
 

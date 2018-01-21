@@ -81,11 +81,11 @@ public class AdminController extends BasicController
             }
             for (Student s : teacherStudentDAO.getAllStudent(teacher))
                 teacherStudentDAO.deleteStudent(teacher, s);
-            MessageBuffer.setMessage(user,"Your old info may be deleted because identity change, Please check, We're terribly sorry");
+            MessageBuffer.setMessage(user,"System:Your old info may be deleted because identity change, Please check, We're terribly sorry");
         }
         else if (user.getUserIdentity().equals(UserType.STUDENT))
         {
-            MessageBuffer.setMessage(user, "Your old info may be deleted because identity change, Please check, We're terribly sorry");
+            MessageBuffer.setMessage(user, "System:Your old info may be deleted because identity change, Please check, We're terribly sorry");
             Student student = (Student) user;
             for (Teacher t : teacherStudentDAO.getAllTeacher(student))
                 t.deleteStudent(student);

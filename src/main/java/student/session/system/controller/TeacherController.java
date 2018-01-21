@@ -163,7 +163,18 @@ public class TeacherController extends BasicController
                               @PathVariable Long sessionID)
     {
         Teacher teacher = (Teacher) userDAO.findByUserName(userName);
-        teacher.replaceSession(sessionID, new Session(sessionForm));
+        try
+        {
+            teacher.replaceSession(sessionID, new Session(sessionForm));
+        }
+        catch (SessionException e)
+        {
+
+            model.addAttribute("errorInfo", e.getMessage());
+            model.addAttribute("errorType", "insertError");
+            return "redirect:/teacher/" + userName;
+        }
+
         return "redirect:/teacher/" + userName;
     }
     @RequestMapping(value = "/teacher/{userName}/studentManage")

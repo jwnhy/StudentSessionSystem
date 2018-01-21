@@ -41,7 +41,10 @@ public class LoginController extends BasicController
         else if (user.getUserIdentity() == UserType.STUDENT)
             return "redirect:/student/" + user.getUserName();
 
-        else return "redirect:/admin";
+        else if(user.getUserIdentity()==UserType.ADMIN)
+            return "redirect:/admin";
+        else
+            return "redirect:/login";
 
     }
 }
